@@ -11,6 +11,10 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+const (
+	BasicRoute = "/mcp/proxy"
+)
+
 // SSE is a handler for the sse endpoint
 func SSE(c echo.Context) error {
 	ctx := proxy.GetSSEContext(c)
@@ -18,7 +22,8 @@ func SSE(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, "Failed to get SSE context")
 	}
 
-	return c.String(http.StatusNotFound, "sse connection not supported now, please use streamable http or stdio connection")
+	// enable sse
+	// return c.String(http.StatusNotFound, "sse connection not supported now, please use streamable http or stdio connection")
 
 	req := c.Request()
 
@@ -98,7 +103,7 @@ func SSE(c echo.Context) error {
 	}()
 
 	// response to client with endpoint url
-	messagesUrl := fmt.Sprintf("/messages?sessionid=%s", sessionID)
+	messagesUrl := fmt.Sprintf(BasicRoute+"/messages?sessionid=%s", sessionID)
 	writer.SendEventData("endpoint", messagesUrl)
 
 	// listen to messages

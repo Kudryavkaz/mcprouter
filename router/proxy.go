@@ -8,8 +8,8 @@ import (
 // ProxyRoute will create the routes for the http server
 func ProxyRoute(e *echo.Echo) {
 	// sse proxy
-	e.GET("/sse/:key", proxy.SSE)
-	e.POST("/messages", proxy.Messages)
+	e.GET(proxy.BasicRoute+"/sse/:key", proxy.SSE)
+	e.POST(proxy.BasicRoute+"/messages", proxy.Messages)
 	// streamable http proxy
-	e.Any("/mcp/:key", proxy.MCP)
+	// e.Any("/mcp/:key", proxy.MCP)
 }
